@@ -6,6 +6,6 @@ import (
 
 func GetRoot(c *gin.Context) {
 	c.JSON(200, gin.H{
-		"message": "Your API is up and running!",
+		"message": "API is up and running!",
 	})
 }
