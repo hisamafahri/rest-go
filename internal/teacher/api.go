@@ -3,14 +3,30 @@ package teacher
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/hisamafahri/rest-go/db"
+	"github.com/lib/pq"
 )
 
+var dbCon = db.DB()
+
 func GetAllTeacher(c *gin.Context) {
-
-	dbCon := db.DB()
-
 	var teacher []db.Teacher
-	dbCon.Find(&teacher)
 
-	c.JSON(200, &teacher)
+	if err := dbCon.Find(&teacher).Error; err != nil {
+		pqErr := err.(*pq.Error)
+		c.JSON(500, gin.H{"error": true, "details": pqErr.Message})
+	} else {
+		c.JSON(200, &teacher)
+	}
+}
+
+func GetATeacher(c *gin.Context) {
+	var teacher []db.Teacher
+	id := c.Param("id")
+
+	if err := dbCon.Find(&teacher, id).Error; err != nil {
+		pqErr := err.(*pq.Error)
+		c.JSON(500, gin.H{"error": true, "details": pqErr.Message})
+	} else {
+		c.JSON(200, &teacher)
+	}
 }
