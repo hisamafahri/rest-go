@@ -15,5 +15,6 @@ func main() {
 	route.GET("/teacher/:id", teacher.GetOneTeacher)
 	route.DELETE("/teacher/:id", teacher.DeleteOneTeacher)
 	route.POST("/teacher", teacher.CreateOneTeacher)
+	route.PUT("/teacher", teacher.UpdateOneTeacher)
 	route.Run(":3000")
 }
