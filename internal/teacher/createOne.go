@@ -8,7 +8,7 @@ import (
 )
 
 type teacher struct {
-	TeacherID uint   `json:"teacherID" binding:"required"`
+	TeacherID uint   `json:"teacherId" binding:"required"`
 	FullName  string `json:"fullName" binding:"required"`
 	Email     string `json:"email"`
 }

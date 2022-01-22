@@ -4,11 +4,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hisamafahri/rest-go/internal/root"
 	"github.com/hisamafahri/rest-go/internal/teacher"
+	"github.com/hisamafahri/rest-go/pkg/db"
 )
 
-// var (teacher = &db.Teacher{FullName: "JK Rownling", Email: "jk@rowling.com"})
-
 func main() {
+	db.DB()
 	route := gin.Default()
 	route.GET("/", root.GetRoot)
 	route.GET("/teacher", teacher.GetAllTeacher)
