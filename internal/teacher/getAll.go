@@ -12,7 +12,8 @@ func GetAllTeacher(c *gin.Context) {
 
 	if err := dbCon.Find(&teacher).Error; err != nil {
 		c.JSON(500, gin.H{"error": true, "details": err.Error()})
-	} else {
-		c.JSON(200, &teacher)
+		return
 	}
+
+	c.JSON(200, &teacher)
 }
