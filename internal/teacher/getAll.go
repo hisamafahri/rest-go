@@ -1,6 +1,8 @@
 package teacher
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/hisamafahri/rest-go/pkg/db"
 )
@@ -11,9 +13,9 @@ func GetAllTeacher(c *gin.Context) {
 	var teacher []db.Teacher
 
 	if err := dbCon.Find(&teacher).Error; err != nil {
-		c.JSON(500, gin.H{"error": true, "details": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "details": err.Error()})
 		return
 	}
 
-	c.JSON(200, &teacher)
+	c.JSON(http.StatusOK, &teacher)
 }

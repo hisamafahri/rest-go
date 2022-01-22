@@ -1,6 +1,8 @@
 package teacher
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/hisamafahri/rest-go/pkg/db"
 )
@@ -10,11 +12,11 @@ func DeleteOneTeacher(c *gin.Context) {
 	id := c.Param("id")
 
 	if err := dbCon.Delete(&teacher, id).Error; err != nil {
-		c.JSON(500, gin.H{"error": true, "details": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "details": err.Error()})
 		return
 	}
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"error":   false,
 		"details": "Item deleted!",
 	})

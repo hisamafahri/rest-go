@@ -27,7 +27,7 @@ func CreateOneTeacher(c *gin.Context) {
 	data := db.Teacher{TeacherID: body.TeacherID, FullName: body.FullName, Email: body.Email}
 
 	if err := dbCon.Create(&data).Error; err != nil {
-		c.JSON(500, gin.H{"error": true, "details": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": true, "details": err.Error()})
 		return
 	}
 
