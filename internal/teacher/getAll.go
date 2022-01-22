@@ -18,15 +18,3 @@ func GetAllTeacher(c *gin.Context) {
 		c.JSON(200, &teacher)
 	}
 }
-
-func GetATeacher(c *gin.Context) {
-	var teacher []db.Teacher
-	id := c.Param("id")
-
-	if err := dbCon.Find(&teacher, id).Error; err != nil {
-		pqErr := err.(*pq.Error)
-		c.JSON(500, gin.H{"error": true, "details": pqErr.Message})
-	} else {
-		c.JSON(200, &teacher)
-	}
-}

@@ -12,6 +12,7 @@ func main() {
 	route := gin.Default()
 	route.GET("/", root.GetRoot)
 	route.GET("/teacher", teacher.GetAllTeacher)
-	route.GET("/teacher/:id", teacher.GetATeacher)
+	route.GET("/teacher/:id", teacher.GetOneTeacher)
+	route.DELETE("/teacher/:id", teacher.DeleteOneTeacher)
 	route.Run(":3000")
 }
