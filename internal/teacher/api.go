@@ -2,7 +2,7 @@ package teacher
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/hisamafahri/rest-go/db"
+	"github.com/hisamafahri/rest-go/pkg/db"
 	"github.com/lib/pq"
 )
 

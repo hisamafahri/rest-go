@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 
 	"gorm.io/driver/postgres"
@@ -13,6 +14,11 @@ import (
 )
 
 func DB() *gorm.DB {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	dbDialect := os.Getenv("DB_DIALECT")
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
@@ -22,23 +28,24 @@ func DB() *gorm.DB {
 
 	dbDsn := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s port=%s", dbHost, dbUser, dbName, dbPassword, dbPort)
 
-	sqlDB, errInit := sql.Open(dbDialect, dbDsn)
+	sqlDB, sqlErr := sql.Open(dbDialect, dbDsn)
 
-	if errInit != nil {
-		log.Fatal(errInit)
-	}
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 
-	dbCon, err := gorm.Open(postgres.New(postgres.Config{
+	if sqlErr != nil {
+		log.Fatal(sqlErr)
+	}
+
+	gormDB, gormErr := gorm.Open(postgres.New(postgres.Config{
 		Conn: sqlDB,
 	}), &gorm.Config{})
 
-	if err != nil {
-		log.Fatal(err)
+	if gormErr != nil {
+		log.Fatal(gormErr)
 	}
 
-	dbCon.AutoMigrate(&Teacher{})
+	gormDB.AutoMigrate(&Teacher{})
 
-	return dbCon
+	return gormDB
 }
