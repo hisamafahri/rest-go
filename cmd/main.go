@@ -7,6 +7,7 @@ import (
 	"github.com/hisamafahri/rest-go/internal/teacher"
 	"github.com/hisamafahri/rest-go/pkg/authToken"
 	"github.com/hisamafahri/rest-go/pkg/db"
+	"github.com/hisamafahri/rest-go/pkg/helper"
 )
 
 func main() {
@@ -25,6 +26,6 @@ func main() {
 		authorized.PUT("/teacher", teacher.UpdateOneTeacher)
 	}
 
-	route.GET("/auth", auth.GenerateToken)
+	route.GET("/auth", helper.VerifyBasicAuth(), auth.GenerateToken)
 	route.Run(":3000")
 }
